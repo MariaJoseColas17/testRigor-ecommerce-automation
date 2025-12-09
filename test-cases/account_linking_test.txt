@@ -1,0 +1,46 @@
+Test name: Account Preferences – newsletter and wishlist
+
+# Precondition:
+# The test user exists:
+#   Email: qa.maria.demo+01@example.com
+#   Password: Password123!
+
+go to "https://demowebshop.tricentis.com/"
+
+# --- Login ---
+click "Log in"
+enter "qa.maria.demo+01@example.com" into "Email"
+enter "Password123!" into "Password"
+click "Log in"
+check that page contains "Log out"
+
+# --- Subscribe to newsletter (left sidebar) ---
+# We use the same email address for newsletter signup
+enter "qa.maria.demo+01@example.com" into "newsletter-email"
+click "Subscribe"
+
+# Validate subscription message (success or already subscribed)
+check that page contains "Your subscription has been successfully processed."
+    or page contains "The email address is already subscribed."
+
+# --- Add an item to wishlist ---
+click "Books"
+click on first occurrence of "Add to wishlist"
+check that page contains "The product has been added to your wishlist"
+
+# --- Open wishlist page ---
+click "Wishlist"
+check that page contains "Wishlist"
+
+# Verify at least one product is listed
+check that page contains "Product(s)"
+check that page does not contain "The wishlist is empty!"
+
+# Optional: remove item from wishlist
+click on first occurrence of "Remove"
+click "Update wishlist"
+
+# Verify wishlist might be empty after removal
+# (this step is tolerant; it passes if page shows either state)
+check that page contains "The wishlist is empty."
+    or page contains "Product(s)"

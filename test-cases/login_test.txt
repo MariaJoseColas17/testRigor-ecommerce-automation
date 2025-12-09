@@ -1,0 +1,23 @@
+Test name: Login – existing customer
+
+# Precondition:
+# The user account already exists in Demo Web Shop.
+# Example test user:
+#   Email: qa.maria.demo+01@example.com
+#   Password: Password123!
+
+go to "https://demowebshop.tricentis.com/"
+
+# Open login page
+click "Log in"
+
+# Fill login form
+enter "qa.maria.demo+01@example.com" into "Email"
+enter "Password123!" into "Password"
+
+click "Log in"
+
+# Verify successful login
+check that page contains "Log out"
+check that page contains "My account"
+check that page does not contain "Login was unsuccessful."

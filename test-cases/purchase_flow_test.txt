@@ -1,0 +1,70 @@
+Test name: Purchase Flow – simple order
+
+# Precondition:
+# The test user exists:
+#   Email: qa.maria.demo+01@example.com
+#   Password: Password123!
+
+go to "https://demowebshop.tricentis.com/"
+
+# --- Login ---
+click "Log in"
+enter "qa.maria.demo+01@example.com" into "Email"
+enter "Password123!" into "Password"
+click "Log in"
+check that page contains "Log out"
+
+# --- Select a product ---
+click "Books"
+check that page contains "Books"
+
+# Add first available book to cart
+click on first occurrence of "Add to cart"
+check that page contains "The product has been added to your shopping cart"
+
+# --- Go to Shopping cart ---
+click "Shopping cart"
+check that page contains "Shopping cart"
+check that page contains "Subtotal"
+
+# Agree with terms of service if required
+if page contains "I agree with the terms of service":
+    click "I agree with the terms of service"
+
+# --- Checkout process ---
+click "Checkout"
+
+# If not already logged in, ensure we see checkout steps
+check that page contains "Checkout"
+
+# Billing address step
+if page contains "Billing address":
+    click "Continue"
+
+# Shipping address step
+if page contains "Shipping address":
+    click "Continue"
+
+# Shipping method step
+if page contains "Shipping method":
+    click "Continue"
+
+# Payment method step
+if page contains "Payment method":
+    click "Continue"
+
+# Payment information step
+if page contains "Payment information":
+    click "Continue"
+
+# Confirm order
+if page contains "Confirm order":
+    click "Confirm"
+
+# --- Verify order success ---
+check that page contains "Your order has been successfully processed!"
+check that page contains "Order number"
+click "Continue"
+
+# Back to home
+check that page contains "Welcome to our store"

@@ -1,0 +1,34 @@
+name: Run testRigor tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Trigger testRigor suite
+        env:
+          TESTRIGOR_TOKEN: ${{ secrets.TESTRIGOR_TOKEN }}
+          TESTRIGOR_SUITE_ID: ${{ secrets.TESTRIGOR_SUITE_ID }}
+        run: |
+          echo "Starting testRigor execution..."
+
+          curl -X POST "https://api.testrigor.com/api/v1/suites/${TESTRIGOR_SUITE_ID}/execute" \
+            -H "Authorization: Bearer ${TESTRIGOR_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "executionName": "GitHub Actions Run",
+              "triggeredBy": "CI/CD",
+              "branch": "main"
+            }'
+
+          echo "Execution request sent to testRigor."
